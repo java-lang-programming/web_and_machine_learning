@@ -1,0 +1,53 @@
+あとでまとめる。
+
+version: '3.6'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: ./web
+    image: flask_web_dev
+    container_name: flask_web_dev
+    tty: true
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+
+cd /Users/msuzuki/workspace/web_python
+docker-compose build
+docker-compose up
+dockeer images
+docker exec -it flask_web_dev /bin/sh
+
+pip install flask
+// これは入れない。
+pip uninstall Flask-Lint
+
+pip install flake8
+pip install autopep8
+
+lintはこれ
+https://blog-ja.sideci.com/entry/2017/06/20/110000
+
+
+// 保存
+pip freeze > requirements.txt
+
+
+//  次やること
+サービスを動かす。
+git保存
+
+lint導入　OK 確認
+unitest
+json返す
+protpcol buffer
+model作成。(いくつか。)
+react

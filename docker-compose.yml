@@ -1,0 +1,18 @@
+version: '3.6'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build:
+      context: ./web
+    image: flask_web_dev
+    container_name: flask_web_dev
+    tty: true
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
