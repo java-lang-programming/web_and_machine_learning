@@ -26,12 +26,20 @@ docker-compose up
 dockeer images
 docker exec -it flask_web_dev /bin/sh
 
+pip install pipenv
+
 pip install flask
 // これは入れない。
 pip uninstall Flask-Lint
 
 pip install flake8
 pip install autopep8
+pip install numpy
+pip install scipy
+pip install matplotlib
+pip install scikit-learn
+pip install mglearn
+
 
 lintはこれ
 https://blog-ja.sideci.com/entry/2017/06/20/110000
@@ -45,9 +53,35 @@ pip freeze > requirements.txt
 サービスを動かす。
 git保存
 
-lint導入　OK 確認
+lint導入(flake8)　OK 確認
 unitest
 json返す
 protpcol buffer
 model作成。(いくつか。)
 react
+
+==
+こっちは速度を改善されてから。
+install
+pip install pipenv
+pip uninstall pipenv
+
+pipenv install flask
+pipenv install flake8
+pipenv install autopep8
+pipenv install numpy
+pipenv  install scipy
+pipenv  install matplotlib
+pipenv  install scikit-learn
+pipenv  install mglearn
+
+==
+環境構築
+https://qiita.com/sabaku20XX/items/8bc6e8f999e8009d76fd
+https://qiita.com/k_harada/items/7025c9fb01588ed073f7
+
+
+これを参考に構築
+https://github.com/mokemokechicken/reversi-alpha-zero/tree/2a48aeccfc79038bc153518f1da36ec3ec7e50ec/src/reversi_zero
+
+https://qiita.com/mokemokechicken/items/c9c0b042f3b1a7c383db
