@@ -35,25 +35,31 @@ def make_review_csv():
   print(dir_path)
 
   df = pd.DataFrame()
-  df = df.append([["hello", 1], ["hello world", 2]], ignore_index=True)
+  # df = df.append([["hello", 1], ["hello world", 2]], ignore_index=True)
+  # df.columns = ['review', 'sentiment']
+  # np.random.seed(0)
+  # df = df.reindex(np.random.permutation(df.index))
+  # print(csv_path)
+  # df.to_csv(csv_path, index=False)
+  # return csv_path
+  # df.to_csv(output_file_path, index=False)
+  # df = pd.DataFrame()
+  for s in ('test', 'train'):
+    for l in ('pos', 'neg'):
+      path = '/aclImdb/%s/%s' % (s, l)
+      path2 = dir_path + path
+      # ファイル名だけ取り出す
+      for file in os.listdir(path2):
+        # ファイル名とpathを結合
+        with open(os.path.join(path2, file), "r", encoding="utf-8") as f:
+          text = f.read()
+          df = df.append([[text, labels[l]]], ignore_index=True)
+
   df.columns = ['review', 'sentiment']
   np.random.seed(0)
   df = df.reindex(np.random.permutation(df.index))
-  print(csv_path)
   df.to_csv(csv_path, index=False)
   return csv_path
-  #df.to_csv(output_file_path, index=False)
-  # df = pd.DataFrame()
-  # for s in ('test', 'train'):
-  #   for l in ('pos', 'neg'):
-  #     path = '/aclImdb/%s/%s' % (s, l)
-  #     path2 = dir_path + path
-  #     # ファイル名だけ取り出す
-  #     for file in os.listdir(path2):
-  #       # ファイル名とpathを結合
-  #       with open(os.path.join(path2, file), "r", encoding="utf-8") as f:
-  #         text = f.read()
-  #         df = df.append([text, labels[l]], ignore_index=True)
 
 def load_data(data_type='train'):
   file_path = os.path.dirname(os.path.abspath(__file__)) + '/aclImdb/'
