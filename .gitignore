@@ -1,1 +1,5 @@
-/tmp/*
+/tmp/*a
+
+/**/aclImdb/*
+**/__pycache__/**
+tmp/**
