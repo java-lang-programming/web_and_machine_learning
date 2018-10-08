@@ -16,3 +16,13 @@ services:
       - "8000:8000"
     depends_on:
       - db
+  local:
+    build:
+      context: ./local
+    image: jupyter_local
+    container_name: jupyter_local
+    tty: true
+    volumes:
+      - ./local:/app
+    ports:
+      - "8888:8888"
