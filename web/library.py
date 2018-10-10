@@ -11,7 +11,7 @@ from dataset import stopword
 print(np.__version__)
 print(sklearn.__version__)
 
-print(stopword.stop_words())
+#print(stopword.stop_words())
 
 #csv = titanic.load_data()
 #print(csv)
@@ -19,5 +19,5 @@ print(stopword.stop_words())
 #train = pd.read_csv(csv)
 #print(train)
 
-#trainer = aclImdb.Trainer()
-#print(trainer.train())
+trainer = aclImdb.Trainer()
+print(trainer.train())

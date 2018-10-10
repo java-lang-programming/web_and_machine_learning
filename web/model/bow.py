@@ -4,6 +4,7 @@ from dataset import stopword
 import sys
 sys.path.append('..')
 import re
+from nltk.stem.porter import PorterStemmer
 
 
 class Bow:
@@ -25,4 +26,13 @@ class Bow:
 
     @property
     def stop_words(self):
-      return self._stop_words
+        return self._stop_words
+
+    @classmethod
+    def tokenizer(self, text):
+       return text.split()
+
+    @classmethod
+    def tokenizer_porter(self, text):
+       porter = PorterStemmer()
+       return [porter.stem(word) for word in text.split()]
