@@ -4,6 +4,9 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
+from sklearn.feature_extraction.text import HashingVectorizer
+from sklearn.linear_model import SGDClassifier
+import numpy as np
 from model import bow
 # from model import bow
 import sys
@@ -15,6 +18,8 @@ class Trainer():
 
     # 英語用
     # ここはdata prossessorクラスをつくべきかも。。。
+    # ４０分くらいかかる
+    # 計算量https://teratail.com/questions/127509
     def train(self):
         df = pd.DataFrame()
         df = pd.read_csv(self._bow.csv_path)
@@ -49,8 +54,6 @@ class Trainer():
                        'clf__C': [1.0, 10.0, 100.0]},
                       ]
 
-        print('sssssssss')
-
         lr_tfidf = Pipeline([('vect', tfidf),
                              ('clf', LogisticRegression(random_state=0))])
 
@@ -58,7 +61,46 @@ class Trainer():
 
         gridSearchCV.fit(train, label)
         print('params %s' % gridSearchCV.best_params_)
+        print('CV Acuracy: %.3f ' % gridSearchCV.best_score_)
         # print(bow.Bow.preprocessor('</a>This is :) is :( a test :-)!'))
+
+    def train2(self):
+        df = pd.DataFrame()
+        df = pd.read_csv(self._bow.csv_path)
+        train = df.loc[:25000, 'review'].values
+        label = df.loc[:25000, 'sentiment'].values
+        test_train = df.loc[25000:, 'review'].values
+        test_label = df.loc[25000:, 'sentiment'].values
+        classes = np.array([0, 1])
+
+        #tokenized = self._bow.tokenizer_without_stop_word('I hava a pen')
+
+        x_train, y_label = self._bow.get_minibatch(self._bow.stream_docs(), size=10)
+        #print(x_train)
+        #print(y_label)
+        vect = HashingVectorizer(decode_error='ignore',
+                                 n_features=2**21,
+                                 preprocessor=None,
+                                 tokenizer=self._bow.tokenizer_without_stop_word)
+
+        clf = SGDClassifier(loss='log', random_state=1, n_iter=1)
+
+        for _ in range(45):
+            x_train, train_label = self._bow.get_minibatch(self._bow.stream_docs(), size=1000)
+            if not x_train:
+                break
+
+            x_train = vect.transform(x_train)
+            clf.partial_fit(x_train, train_label, classes=classes)
+
+        x_test_train, test_label = self._bow.get_minibatch(self._bow.stream_docs(), size=5000)
+        x_test_train = vect.transform(x_test_train)
+        print('accuracy %.3f' % clf.score(x_test_train, test_label))
+            
+
+
+
+
 
 
 

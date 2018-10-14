@@ -20,4 +20,4 @@ print(sklearn.__version__)
 #print(train)
 
 trainer = aclImdb.Trainer()
-print(trainer.train())
+print(trainer.train2())
