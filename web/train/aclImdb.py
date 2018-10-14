@@ -62,22 +62,20 @@ class Trainer():
         gridSearchCV.fit(train, label)
         print('params %s' % gridSearchCV.best_params_)
         print('CV Acuracy: %.3f ' % gridSearchCV.best_score_)
-        # print(bow.Bow.preprocessor('</a>This is :) is :( a test :-)!'))
+        # print(bow.Bow.preprocessor('</a>This is :) is :( a test :-)!')) 
 
     def train2(self):
-        df = pd.DataFrame()
-        df = pd.read_csv(self._bow.csv_path)
-        train = df.loc[:25000, 'review'].values
-        label = df.loc[:25000, 'sentiment'].values
-        test_train = df.loc[25000:, 'review'].values
-        test_label = df.loc[25000:, 'sentiment'].values
+        # df = pd.DataFrame()
+        # df = pd.read_csv(self._bow.csv_path)
+        # train = df.loc[:25000, 'review'].values
+        # label = df.loc[:25000, 'sentiment'].values
+        # test_train = df.loc[25000:, 'review'].values
+        # test_label = df.loc[25000:, 'sentiment'].values
         classes = np.array([0, 1])
 
         #tokenized = self._bow.tokenizer_without_stop_word('I hava a pen')
 
-        x_train, y_label = self._bow.get_minibatch(self._bow.stream_docs(), size=10)
-        #print(x_train)
-        #print(y_label)
+        # x_train, y_label = self._bow.get_minibatch(self._bow.stream_docs(), size=2)
         vect = HashingVectorizer(decode_error='ignore',
                                  n_features=2**21,
                                  preprocessor=None,
@@ -85,18 +83,20 @@ class Trainer():
 
         clf = SGDClassifier(loss='log', random_state=1, n_iter=1)
 
+        doc_stream = self._bow.stream_docs()
+
         for _ in range(45):
-            x_train, train_label = self._bow.get_minibatch(self._bow.stream_docs(), size=1000)
+            x_train, train_label = self._bow.get_minibatch(doc_stream, size=1000)
             if not x_train:
                 break
-
             x_train = vect.transform(x_train)
             clf.partial_fit(x_train, train_label, classes=classes)
 
-        x_test_train, test_label = self._bow.get_minibatch(self._bow.stream_docs(), size=5000)
+        x_test_train, test_label = self._bow.get_minibatch(doc_stream, size=5000)
         x_test_train = vect.transform(x_test_train)
         print('accuracy %.3f' % clf.score(x_test_train, test_label))
-            
+        clf.partial_fit(x_test_train, test_label)
+
 
 
 
