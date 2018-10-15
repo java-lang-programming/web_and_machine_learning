@@ -96,6 +96,7 @@ class Trainer():
         x_test_train = vect.transform(x_test_train)
         print('accuracy %.3f' % clf.score(x_test_train, test_label))
         clf.partial_fit(x_test_train, test_label)
+        return clf
 
 
 

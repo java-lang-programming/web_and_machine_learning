@@ -27,6 +27,15 @@ flake8を利用。
 flake8 ./resource/*
 flake8 ./train/*
 
+## importの順番
+
+import-orderを利用
+
+// file
+import-order --only-file vectorizer.py
+
+
+
 License
 -------
 

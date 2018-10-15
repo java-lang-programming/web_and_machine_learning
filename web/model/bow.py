@@ -39,7 +39,7 @@ class Bow:
 
     def tokenizer_without_stop_word(self, text):
         text = re.sub('<[^>]*>', '', text)
-        emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
+        emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text.lower())
         text = re.sub('[\W]+', ' ', text.lower()) +\
             ' '.join(emoticons).replace('-', '')
         tokenized = [w for w in text.split() if w not in self._stop_words]
