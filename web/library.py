@@ -5,6 +5,7 @@ import nltk
 #from dataset import titanic, aclImdb
 from train import aclImdb as train_aclImdb
 from dataset import stopword
+from dataset import housing
 from model import aclImdb
 
 
@@ -12,7 +13,7 @@ from model import aclImdb
 print(np.__version__)
 print(sklearn.__version__)
 
-#print(stopword.stop_words())
+print(housing.make_housing_csv())
 
 #csv = titanic.load_data()
 #print(csv)
