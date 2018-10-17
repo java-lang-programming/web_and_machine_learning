@@ -23,6 +23,13 @@ import sys
 import os
 import numpy as np
 import pandas as pd
+from logging import getLogger, StreamHandler, DEBUG
+logger = getLogger(__name__)
+handler = StreamHandler()
+handler.setLevel(DEBUG)
+logger.setLevel(DEBUG)
+logger.addHandler(handler)
+logger.propagate = False
 
 labels = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV' ]
 def make_housing_csv():
@@ -33,11 +40,8 @@ def make_housing_csv():
     print('housing.csv is exists: %s' % csv_path)
     return csv_path
 
-  print(csv_path)
-
   df = pd.read_csv(data_path, header=None, sep='\s+')
   df.columns = labels
-  print(df.head())
   df.to_csv(csv_path, index=False)
 
   if os.path.exists(csv_path):
@@ -71,5 +75,12 @@ def make_housing_csv():
 
 def load_data(data_type='train'):
   file_path = os.path.dirname(os.path.abspath(__file__)) + '/housing/housing.csv'
-  print(file_path)
+  logger.debug('load_data : ' + file_path)
   return file_path
+
+# configに変更すること
+def output_dir_path():
+  parenr_dir_path = os.path.abspath(os.path.dirname(os.path.abspath(__file__)) + '/../')
+  logger.debug(' parenr_dir_path : ' + parenr_dir_path)
+  output_dir_path = parenr_dir_path + '/reports/figures/'
+  return output_dir_path
