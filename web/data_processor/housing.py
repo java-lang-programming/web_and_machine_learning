@@ -2,6 +2,10 @@ import numpy as np
 import sklearn
 import pandas as pd
 import pandas_profiling as pdp
+import seaborn as sns
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+mpl.use('Agg')
 from dataset import housing
 from logging import getLogger, StreamHandler, DEBUG
 logger = getLogger(__name__)
@@ -19,7 +23,23 @@ class Housing():
     def output_correlation_matrix_heat_map(self):
         df = pd.read_csv(self._csv_path)
         logger.debug('head data')
-        logger.debug(df.head())
+        # logger.debug(np.array(df.values())
+        # print(df.values())
+        #logger.debug(df.values())
+        # logger.debug(df.columns)
+        # logger.debug(df.values)
+        cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV' ]
+        # cols = ['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX', 'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO', 'B', 'LSTAT', 'MEDV' ]
+        cm = np.corrcoef(df[cols].values.T)
+        file_path = housing.output_dir_path() + 'output_heat_map.png'
+        logger.debug('output_heat_map : ' + file_path)
+        plt.figure()
+        sns.set(font_scale=1.5)
+        fm = sns.heatmap(cm, cbar=True, annot=True, square=True, fmt='.2f',
+                         annot_kws={'size': 15}, yticklabels=cols, xticklabels=cols)
+        plt.savefig(file_path)
+        plt.close('all')
+
 
     # レポートの出力場所は設定ファイルで変更にするべき。
     # pandas_profilingでプロファイルレポートを出力する

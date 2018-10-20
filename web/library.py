@@ -16,7 +16,7 @@ print(sklearn.__version__)
 instance = housing.Housing()
 #print(instance.output_correlation_matrix_heat_map())
 
-print(instance.output_profiling_report())
+print(instance.output_correlation_matrix_heat_map())
 
 #csv = titanic.load_data()
 #print(csv)
