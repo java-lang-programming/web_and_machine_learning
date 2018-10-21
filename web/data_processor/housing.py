@@ -3,6 +3,7 @@ import sklearn
 import pandas as pd
 import pandas_profiling as pdp
 import seaborn as sns
+from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 mpl.use('Agg')
@@ -49,4 +50,20 @@ class Housing():
         file_path = housing.output_dir_path() + 'housing_outputfile.html'
         logger.debug('output_profiling_report : ' + file_path)
         profile.to_file(outputfile=file_path)
+
+    def output_training_report(self):
+        file_path = housing.output_dir_path() + 'training.png'
+        logger.debug('output_training_report : ' + file_path)
+        return file_path
+
+    def get_liner_data(self):
+        df = pd.read_csv(self._csv_path)
+        X = df[['RM']].values
+        y = df['MEDV'].values
+        y = y[:, np.newaxis]
+        sc_x = StandardScaler()
+        sc_y = StandardScaler()
+        X_std = sc_x.fit_transform(X)
+        y_std = sc_y.fit_transform(y)
+        return (X_std, y_std)
 

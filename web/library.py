@@ -3,20 +3,21 @@ import sklearn
 import pandas as pd
 import nltk
 #from dataset import titanic, aclImdb
-from train import aclImdb as train_aclImdb
+from train import housing as train_housing
 from dataset import stopword
 from data_processor import housing
 from model import aclImdb
+from model import linear_regression_gd
 
 
 #nltk.download('stopwords')
 print(np.__version__)
 print(sklearn.__version__)
 
-instance = housing.Housing()
+instance = train_housing.Trainer()
 #print(instance.output_correlation_matrix_heat_map())
 
-print(instance.output_correlation_matrix_heat_map())
+print(instance.train2())
 
 #csv = titanic.load_data()
 #print(csv)
