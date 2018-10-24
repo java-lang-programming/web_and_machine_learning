@@ -67,3 +67,16 @@ class Housing():
         y_std = sc_y.fit_transform(y)
         return (X_std, y_std)
 
+    def get_normal_data(self):
+        df = pd.read_csv(self._csv_path)
+        X = df[['RM']].values
+        y = df['MEDV'].values
+        y = y[:, np.newaxis]
+        return (X, y)
+
+    def get_cross_data(self):
+        df = pd.read_csv(self._csv_path)
+        X = df.iloc[:, :-1].values
+        y = df['MEDV'].values
+        #y = y[:, np.newaxis]
+        return (X, y)

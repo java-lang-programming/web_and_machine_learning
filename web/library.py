@@ -17,7 +17,7 @@ print(sklearn.__version__)
 instance = train_housing.Trainer()
 #print(instance.output_correlation_matrix_heat_map())
 
-print(instance.train2())
+print(instance.validate_train_robust())
 
 #csv = titanic.load_data()
 #print(csv)
