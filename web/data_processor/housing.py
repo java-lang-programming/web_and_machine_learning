@@ -49,7 +49,7 @@ class Housing():
         profile = pdp.ProfileReport(df)
         file_path = housing.output_dir_path() + 'housing_outputfile.html'
         logger.debug('output_profiling_report : ' + file_path)
-        profile.to_file(outputfile=file_path)
+        profile.to_file(outputfile=file_path, index=False)
 
     def output_training_report(self):
         file_path = housing.output_dir_path() + 'training.png'

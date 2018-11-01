@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 
 labels = {'pos':1, 'neg':0}
+# 間違っているような。。。多分ランダムになってない。
 def make_review_csv():
   # ここで作成済みかどうかをチェック
   dir_path = os.path.dirname(os.path.abspath(__file__))

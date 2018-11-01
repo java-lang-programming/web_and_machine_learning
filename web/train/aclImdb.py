@@ -64,6 +64,7 @@ class Trainer():
         print('CV Acuracy: %.3f ' % gridSearchCV.best_score_)
         # print(bow.Bow.preprocessor('</a>This is :) is :( a test :-)!')) 
 
+    # 出力できるように。
     def train2(self):
         # df = pd.DataFrame()
         # df = pd.read_csv(self._bow.csv_path)
@@ -95,7 +96,6 @@ class Trainer():
         x_test_train, test_label = self._bow.get_minibatch(doc_stream, size=5000)
         x_test_train = vect.transform(x_test_train)
         print('accuracy %.3f' % clf.score(x_test_train, test_label))
-        clf.partial_fit(x_test_train, test_label)
         return clf
 
 

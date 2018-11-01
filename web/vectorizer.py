@@ -34,7 +34,7 @@ file_path = parenr_dir_path + '/classifier.pkl'
 clf = pickle.load(open(file_path, 'rb'))
 
 label = {0: 'negative', 1: 'positive'}
-example = ['I love this movie']
+example = ['this movie is fun.']
 
 X = vect.transform(example)
 

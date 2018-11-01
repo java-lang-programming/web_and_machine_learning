@@ -26,6 +26,7 @@ flake8を利用。
 
 flake8 ./resource/*
 flake8 ./train/*
+flake8 ./flask/*
 
 ## importの順番
 
@@ -33,8 +34,14 @@ import-orderを利用
 
 // file
 import-order --only-file vectorizer.py
+import-order --only-file vectorizer.py
 
 
+## 起動
+cd flask
+python  __init__.py
+
+http://localhost:8000/get
 
 License
 -------
